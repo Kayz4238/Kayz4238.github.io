@@ -3,104 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 4 Solution</title>
+    <title>Restaurant Specials</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin: 20px;
-            background-color: #f4f4f4;
+            background-color: #f8f9fa;
         }
         .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            margin-top: 50px;
+        }
+        .tile {
+            display: inline-block;
+            width: 150px;
             padding: 20px;
-        }
-        .greeting {
-            font-size: 18px;
-            margin: 5px;
-            padding: 10px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .greeting:hover {
-            transform: scale(1.05);
-        }
-        form {
-            margin-top: 20px;
-        }
-        input, button {
-            padding: 10px;
-            margin: 5px;
+            margin: 10px;
+            background-color: #007bff;
+            color: white;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <h1>Greetings</h1>
-    <form id="nameForm">
-        <input type="text" id="nameInput" placeholder="Enter a name" required>
-        <button type="submit">Add Name</button>
-    </form>
-    <div class="container" id="greetings"></div>
+    <div class="container">
+        <div class="tile" onclick="loadMenuItems('Menu')">Menu</div>
+        <div class="tile" onclick="loadMenuItems(getRandomCategory())">Specials</div>
+        <div class="tile" onclick="loadMenuItems('Map')">Map</div>
+    </div>
+
     <script>
-        (function () {
-            var names = ["Yaakov", "John", "Jen", "Jason", "Paul", "Frank", "Larry", "Paula", "Laura", "Jim"];
-            var helloSpeaker = {};
-            var byeSpeaker = {};
-            var outputDiv = document.getElementById("greetings");
-            var form = document.getElementById("nameForm");
-            var nameInput = document.getElementById("nameInput");
+        function getRandomCategory() {
+            const categories = ['Lunch', 'Dinner', 'Sushi', 'Drinks', 'Desserts'];
+            return categories[Math.floor(Math.random() * categories.length)];
+        }
 
-            helloSpeaker.speak = function (name) {
-                var message = "Hello " + name;
-                addGreeting(message, "green");
-            };
-
-            byeSpeaker.speak = function (name) {
-                var message = "Goodbye " + name;
-                addGreeting(message, "red");
-            };
-
-            function addGreeting(message, color) {
-                var p = document.createElement("p");
-                p.className = "greeting";
-                p.style.borderLeft = "5px solid " + color;
-                p.textContent = message;
-                p.addEventListener("click", function() {
-                    alert(message);
-                });
-                outputDiv.appendChild(p);
-            }
-
-            for (var i = 0; i < names.length; i++) {
-                var firstLetter = names[i].charAt(0).toLowerCase();
-                if (firstLetter === 'j') {
-                    byeSpeaker.speak(names[i]);
-                } else {
-                    helloSpeaker.speak(names[i]);
-                }
-            }
-
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
-                var newName = nameInput.value.trim();
-                if (newName) {
-                    var firstLetter = newName.charAt(0).toLowerCase();
-                    if (firstLetter === 'j') {
-                        byeSpeaker.speak(newName);
-                    } else {
-                        helloSpeaker.speak(newName);
-                    }
-                    nameInput.value = "";
-                }
-            });
-        })();
+        function loadMenuItems(category) {
+            alert('Loading menu items for: ' + category);
+            // In a real scenario, this would dynamically load the content from the server
+            window.location.href = `menu_html?category=${category}`;
+        }
     </script>
 </body>
 </html>
